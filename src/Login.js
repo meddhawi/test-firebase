@@ -1,5 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { withRouter } from 'react-router'
+import { Redirect } from 'react-router-dom'
 import firebase from './services/firebase';
+import { AuthContext } from "./services/Auth.js";
 
 // Bootstrap 
 import {
@@ -9,11 +12,11 @@ import {
 } from 'react-bootstrap'
 
 class Login extends Component{
-
+    static contextType = AuthContext; 
     constructor(props){
         super(props);
 
-        this.state ={}
+        this.state ={};
     }
 
     set = name => event => {
@@ -23,6 +26,7 @@ class Login extends Component{
 
     handleSubmit = async(event) => {
         const { email, password}  = this.state;
+        const { history } = this.props
         event.preventDefault();
 
          // Validasi
@@ -31,19 +35,16 @@ class Login extends Component{
          // Register via Firebase
          try {
             const login = await firebase.auth().signInWithEmailAndPassword(email, password)
-            console.log("LOGIN DARI FIREBASE: " + JSON.stringify(login))
-             alert('Success Login!')
-             this.setState({
-                 email: '',
-                 password: ''
-             })
+             history.push('/');
          } catch(error) {
              alert('Failed to Login')
              console.log(error)
          }
-
     }
+
     render(){
+        const { currentUser } = this.context
+        if (!!currentUser) return <Redirect to="/" />
         return(
             <div>
                 <Row>
@@ -76,4 +77,4 @@ class Login extends Component{
     }
 }
 
-export default Login
+export default Login;
