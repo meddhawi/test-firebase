@@ -9,6 +9,7 @@ import Login from './Login';
 import Home from './home';
 import Upload from './Upload';
 import Create from "./Create";
+import Post from "./Read";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <PrivateRoute exact path="/" component={Home} />
           <PrivateRoute exact path="/upload" component={Upload} />
           <PrivateRoute exact path="/posts/create" component={Create} />
+          <PrivateRoute exact path="/posts" component={Post} />
           <Route exact path="/register" component={Registration} />
           <Route exact path="/login" component={Login} />
         </Router>
