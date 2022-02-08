@@ -34,7 +34,7 @@ class Login extends Component{
 
          // Register via Firebase
          try {
-            const login = await firebase.auth().signInWithEmailAndPassword(email, password)
+            await firebase.auth().signInWithEmailAndPassword(email, password)
              history.push('/');
          } catch(error) {
              alert('Failed to Login')
@@ -77,4 +77,4 @@ class Login extends Component{
     }
 }
 
-export default Login;
+export default withRouter(Login);
